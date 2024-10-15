@@ -1,0 +1,56 @@
+﻿@page
+@model Inventory.Pages.CostCenters.CreateModel
+
+@{
+    ViewData["Title"] = "Crea centro di costo";
+}
+
+<h1>Crea centro di costo</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <table class="table custom-table">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Centro di costo
+                            </td>
+                            <td>
+                                <input asp-for="CostCenter.Name" class="form-control" />
+                                <span asp-validation-for="CostCenter.Name" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Descrizione
+                            </td>
+                            <td>
+                                <input asp-for="CostCenter.Description" class="form-control" />
+                                <span asp-validation-for="CostCenter.Description" class="text-danger"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <input type="submit" value="Crea" class="btn btn_crea" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <p></p>
+    <a asp-page="Index">Annulla e torna all'indice dei centri di costo</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

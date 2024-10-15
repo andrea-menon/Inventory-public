@@ -1,0 +1,18 @@
+﻿@page
+@model Inventory.Pages.AccediModel
+@{
+    ViewData["Title"] = "Accedi";
+}
+
+<h1 class="text-center">Accedi</h1>
+
+<form method="post" class="text-center">
+    <div class="form-group" style="margin-top:50px">
+        <label for="accessValue">Inserire il codice di accesso:</label>
+        <input type="text" id="accessValue" name="AccessValue"
+               class="form-control text-center"
+               style="margin-left: auto; margin-right: auto;width: 40%; border-width: 5px;" />
+    </div>
+    <p></p>
+    <button type="submit" class="btn btn-primary">Entra</button>
+</form>

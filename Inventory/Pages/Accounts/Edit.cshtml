@@ -1,0 +1,65 @@
+﻿@page
+@model Inventory.Pages.Accounts.EditModel
+@{
+    ViewData["Title"] = "Modifica odine";
+}
+
+<h1>Modifica ordine</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Account.Id" />
+            <div class="form-group">
+                <table class="table custom-table">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Ordine d'acquisto
+                            </td>
+                            <td>
+                                <input asp-for="Account.Oa" class="form-control" />
+                                <span asp-validation-for="Account.Oa" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Richiesta d'acquisto
+                            </td>
+                            <td>
+                                <input asp-for="Account.Rda" class="form-control" />
+                                <span asp-validation-for="Account.Rda" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CAR
+                            </td>
+                            <td>
+                                <input asp-for="Account.Car" class="form-control" />
+                                <span asp-validation-for="Account.Car" class="text-danger"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn_crea" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <p></p>
+    <a asp-page="./Index">Annulla e torna all'indice degli ordini</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

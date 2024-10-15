@@ -1,0 +1,121 @@
+﻿@page
+@model Inventory.Pages.Devices.IndexModel
+
+@{
+    ViewData["Title"] = "Dispositivi";
+}
+
+<h1>Dispositivi</h1>
+
+<p>
+<p></p>
+<a asp-page="Create" class="btn btn_crea">Crea nuovo dispositivo</a>
+</p>
+
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                Numero di serie
+            </th>
+            <th>
+                Modello
+            </th>
+            <th>
+                Descrizione
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Codice cespite ZHE
+            </th>
+            <th>
+                Stato
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Note
+            </th>
+            <th>
+                Utente
+            </th>
+            <th>
+                Di account
+            </th>
+            <th>
+                Centro di costo
+            </th>
+            <th>
+                Codice centro di costo
+            </th>
+            <th>
+                Ordine d'acquisto
+            </th>
+            <th>
+                Richiesta d'acquisto
+            </th>
+            <th>
+                CAR
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Relation)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Sn)
+                    <p></p>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Modifica</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Elimina</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Model.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Model.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Model.Brand.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Zhe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Stato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Di)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.CostCenter.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.CostCenter.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Account.Oa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Account.Rda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Device.Account.Car)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

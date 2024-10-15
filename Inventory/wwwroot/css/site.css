@@ -1,0 +1,97 @@
+html {
+    
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.custom-table {
+    /* Colore di sfondo per la tabella */
+    color: #333; /* Colore del testo */
+}
+
+    .custom-table th {
+        background-color: #007bff; /* Colore di sfondo per l'intestazione */
+        color: white; /* Colore del testo dell'intestazione */
+        border-left-width: 1px;
+    }
+
+    .custom-table th a{
+        background-color: #007bff; /* Colore di sfondo per l'intestazione */
+        color: white; /* Colore del testo dell'intestazione */
+    }
+
+    .custom-table tr {
+        border-right-width: 1px;
+    }
+
+    .custom-table tr:hover {
+        background-color: #e2e5e9;
+        padding: 10px; /* Padding per le celle */
+    }
+
+    .custom-table td {
+        border-left-width: 1px;
+    }
+
+    .custom-table button {
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .custom-table button:hover {
+        color: #fff;
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+    }
+
+.btn_crea {
+    background-color: #98FB98;
+}
+
+    .btn_crea:hover {
+        background-color: #00FA9A;
+    }
+
+.search-results {
+    color: black;
+    position: absolute;
+    z-index: 1000; /* Assicura che sia sopra gli altri elementi */
+    background-color: white; /* Colore di sfondo */
+    border: 1px solid #ccc; /* Bordo */
+    max-height: 200px; /* Altezza massima */
+    overflow-y: auto; /* Scroll se necessario */
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Rimuove i pallini */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Ombra */
+    border-radius: 4px; /* Bordi arrotondati */
+    width: 200px; /* Larghezza */
+    display: none; /* Inizialmente nascosto */
+}
+
+    .search-results.show {
+        display: block; /* Mostra quando necessario */
+    }
+
+    .search-results li:hover {
+        background-color: lightslategray;
+    }

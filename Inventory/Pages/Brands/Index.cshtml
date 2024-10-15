@@ -1,0 +1,122 @@
+﻿@page
+@model Inventory.Pages.Brands.IndexModel
+
+@{
+    ViewData["Title"] = "Marche";
+}
+
+<h1>Marche</h1>
+
+<p>
+    <p></p>
+    <a asp-page="Create" class="btn btn_crea">Crea nuova marca</a>
+</p>
+
+<form method="post">
+
+<input type="hidden" id="submitSource" name="SubmitSource" value="" />
+<input type="hidden" id="buttonSource" name="buttonSource" value="@Model.ButtonSource" />
+
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+                @if (Model.ButtonSource == "buttonNameA")
+                    {
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonNameA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonNameZ')">&#x25BC;</button>
+                    }
+                else if (Model.ButtonSource == "buttonNameZ")
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonNameA')">&#x25B2;</button>
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonNameZ')">&#x25BC;</button>
+                    }
+                else
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonNameA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonNameZ')">&#x25BC;</button>
+                    }
+                <input type="text" id="searchByName" name="SearchName" value="@Model.SearchName" placeholder=" Cerca per marca" onkeyup="searchItems('Name')" />
+                <ul id="resultsList" class="search-results"></ul>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Brand) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+                <p></p>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Modifica</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Elimina</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</form>
+
+@section Scripts {
+
+    <script>
+
+        function setSubmitSource(source) {
+            document.getElementById('submitSource').value = source;
+            document.getElementById('buttonSource').value = source;
+        }
+
+        document.getElementById('searchByName').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('submitSource').value = 'searchByName';
+                this.form.submit();
+            }
+        });
+
+        async function searchItems(column) {
+            const term = document.getElementById('searchBy' + column).value;
+            const resultsList = document.getElementById('resultsList');
+
+            if (term.length === 0) {
+                resultsList.innerHTML = '';
+                resultsList.classList.remove('show'); // Nasconde la lista dei risultati
+                return;
+            }
+
+            try {
+                const response = await fetch(`/Brands/Index?handler=Search&term=${term}&column=${column}`);
+                if (!response.ok) {
+                    throw new Error(`An error occurred: ${response.statusText}`);
+                }
+                const results = await response.json();
+
+                // Costruisci la lista dei risultati
+                resultsList.innerHTML = '';
+                results.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.name || ""; // Accedi dinamicamente
+                    
+                        li.addEventListener('click', () => {
+                            window.location.href = `/Brands/Edit?id=${item.id}`; // Imposta l'URL della pagina di modifica
+                        });
+                    
+                    resultsList.appendChild(li);
+                });
+
+                resultsList.classList.add('show'); // Mostra la lista dei risultati
+
+                // Calcola e imposta la posizione della lista dei risultati
+                const inputRect = document.getElementById('searchBy' + column).getBoundingClientRect();
+                resultsList.style.top = `${inputRect.bottom}px`; // Posiziona sotto l'input
+                resultsList.style.left = `${inputRect.left}px`; // Allinea a sinistra dell'input
+
+            } catch (error) {
+                console.error('Error fetching search results:', error);
+            }
+        }
+
+    </script>
+
+}

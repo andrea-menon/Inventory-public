@@ -1,0 +1,42 @@
+﻿@page
+@model Inventory.Pages.Accounts.DeleteModel
+
+@{
+    ViewData["Title"] = "Elimina ordine";
+}
+
+<h1>Elimina ordine</h1>
+<p></p>
+<p></p>
+<h3>Site sicuri di voler eliminare l'ordine "@Html.DisplayFor(model => model.Account.Oa)" ?</h3>
+<p></p>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Richiesta d'acquisto
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.Rda)
+        </dd>
+        <dt class="col-sm-2">
+            CAR
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.Car)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Account.Id" />
+        <input type="submit" value="Elimina" class="btn btn-danger" />
+    </form>
+    @if (TempData.ContainsKey("Avviso"))
+    {
+        <p></p>
+        <div class="alert alert-warning">
+            @TempData["Avviso"]
+        </div>
+    }
+    <p></p>
+    <a asp-page="./Index">Annulla e torna all'indice delle marche</a>
+</div>

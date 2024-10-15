@@ -1,0 +1,122 @@
+﻿@page
+@model Inventory.Pages.Relations.DeleteModel
+
+@{
+    ViewData["Title"] = "Elimina dispositivo";
+}
+
+<h1>Elimina dispositivo</h1>
+<p></p>
+<p></p>
+<h3>Site sicuri di voler eliminare il seguente dispositivo?</h3>
+<p></p>
+<div>
+    
+    <dl class="row">
+        <dt class="col-sm-2">
+            Numero di serie
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Sn)
+        </dd>
+        <dt class="col-sm-2">
+            Modello
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Descrizione
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Marca
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Model.Brand.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Codice cespite ZHE
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Zhe)
+        </dd>
+        <dt class="col-sm-2">
+            Stato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Stato)
+        </dd>
+        <dt class="col-sm-2">
+            Data
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Data)
+        </dd>
+        <dt class="col-sm-2">
+            Note
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Note)
+        </dd>
+        <dt class="col-sm-2">
+            Utente
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Relation.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Di account
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Relation.User.Di)
+        </dd>
+        <dt class="col-sm-2">
+            Centro di costo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Relation.User.CostCenter.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Codice centro di costo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Relation.User.CostCenter.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Ordine d'acquisto
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Account.Oa)
+        </dd>
+        <dt class="col-sm-2">
+            Richiesta d'acquisto
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Account.Rda)
+        </dd>
+        <dt class="col-sm-2">
+            CAR
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Device.Account.Car)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Relation.Id" />
+        <input type="submit" value="Elimina" class="btn btn-danger" />
+    </form>
+
+    @if (TempData.ContainsKey("Avviso"))
+    {
+        <p></p>
+        <div class="alert alert-warning">
+            @TempData["Avviso"]
+        </div>
+    }
+    <p></p>
+    <a asp-page="./Index">Annulla e torna alla lista dei dispositivi</a>
+</div>

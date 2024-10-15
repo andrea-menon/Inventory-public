@@ -1,0 +1,185 @@
+﻿@page
+@model Inventory.Pages.Accounts.IndexModel
+
+@{
+    ViewData["Title"] = "Ordini";
+}
+
+<h1>Ordini</h1>
+
+<p>
+<p></p>
+<a asp-page="Create" class="btn btn_crea">Crea nuovo ordine</a>
+</p>
+
+<form method="post">
+
+<input type="hidden" id="submitSource" name="SubmitSource" value="" />
+<input type="hidden" id="buttonSource" name="buttonSource" value="@Model.ButtonSource" />
+
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                Ordine d'acquisto
+                @if (Model.ButtonSource == "buttonOaA")
+                    {
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonOaA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonOaZ')">&#x25BC;</button>
+                    }
+                else if (Model.ButtonSource == "buttonOaZ")
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonOaA')">&#x25B2;</button>
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonOaZ')">&#x25BC;</button>
+                    }
+                else
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonOaA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonOaZ')">&#x25BC;</button>
+                    }
+                <input type="text" id="searchByOa" name="SearchOa" value="@Model.SearchOa" placeholder="Cerca per ordine d'acquisto" onkeyup="searchItems('Oa')" />
+                <ul id="resultsList" class="search-results"></ul>
+            </th>
+            <th>
+                Richiesta d'acquisto
+                @if (Model.ButtonSource == "buttonRdaA")
+                    {
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonRdaA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonRdaZ')">&#x25BC;</button>
+                    }
+                else if (Model.ButtonSource == "buttonRdaZ")
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonRdaA')">&#x25B2;</button>
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonRdaZ')">&#x25BC;</button>
+                    }
+                else
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonRdaA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonRdaZ')">&#x25BC;</button>
+                    }
+                <input type="text" id="searchByRda" name="SearchRda" value="@Model.SearchRda" placeholder="Cerca per richiesta d'acquisto" onkeyup="searchItems('Rda')" />
+                <ul id="resultsList" class="search-results"></ul>
+            </th>
+            <th>
+                CAR
+                @if (Model.ButtonSource == "buttonCarA")
+                    {
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonCarA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonCarZ')">&#x25BC;</button>
+                    }
+                else if (Model.ButtonSource == "buttonCarZ")
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonCarA')">&#x25B2;</button>
+                        <button type="submit" style="color: red" onclick="setSubmitSource('buttonCarZ')">&#x25BC;</button>
+                    }
+                else
+                    {
+                        <button type="submit" onclick="setSubmitSource('buttonCarA')">&#x25B2;</button>
+                        <button type="submit" onclick="setSubmitSource('buttonCarZ')">&#x25BC;</button>
+                    }
+                <input type="text" id="searchByCar" name="SearchCar" value="@Model.SearchCar" placeholder="Cerca per CAR" onkeyup="searchItems('Car')" />
+                <ul id="resultsList" class="search-results"></ul>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Account)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oa)
+                    <p></p>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Modifica</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Elimina</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</form>
+
+
+@section Scripts {
+
+    <script>
+
+        function setSubmitSource(source) {
+            document.getElementById('submitSource').value = source;
+            document.getElementById('buttonSource').value = source;
+        }
+
+        document.getElementById('searchByOa').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('submitSource').value = 'searchByOa';
+                this.form.submit();
+            }
+        });
+
+        document.getElementById('searchByRda').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('submitSource').value = 'searchByRda';
+                this.form.submit();
+            }
+        });
+
+        document.getElementById('searchByCar').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('submitSource').value = 'searchByCar';
+                this.form.submit();
+            }
+        });
+
+        async function searchItems(column) {
+            const term = document.getElementById('searchBy' + column).value;
+            const resultsList = document.getElementById('resultsList');
+
+            if (term.length === 0) {
+                resultsList.innerHTML = '';
+                resultsList.classList.remove('show'); // Nasconde la lista dei risultati
+                return;
+            }
+
+            try {
+                const response = await fetch(`/Accounts/Index?handler=Search&term=${term}&column=${column}`);
+                if (!response.ok) {
+                    throw new Error(`An error occurred: ${response.statusText}`);
+                }
+                const results = await response.json();
+
+                // Costruisci la lista dei risultati
+                resultsList.innerHTML = '';
+                results.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.oa || item.rda || item.car || ""; // Accedi dinamicamente
+
+                    li.addEventListener('click', () => {
+                        window.location.href = `/Accounts/Edit?id=${item.id}`; // Imposta l'URL della pagina di modifica
+                    });
+
+                    resultsList.appendChild(li);
+                });
+
+                resultsList.classList.add('show'); // Mostra la lista dei risultati
+
+                // Calcola e imposta la posizione della lista dei risultati
+                const inputRect = document.getElementById('searchBy' + column).getBoundingClientRect();
+                resultsList.style.top = `${inputRect.bottom}px`; // Posiziona sotto l'input
+                resultsList.style.left = `${inputRect.left}px`; // Allinea a sinistra dell'input
+
+            } catch (error) {
+                console.error('Error fetching search results:', error);
+            }
+        }
+
+    </script>
+
+}

@@ -1,0 +1,118 @@
+﻿@page
+@model Inventory.Pages.Devices.CreateModel
+
+@{
+    ViewData["Title"] = "Crea dispositivo";
+}
+
+<h1>Crea nuovo dispositivo</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <table class="table custom-table">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Numero di serie
+                            </td>
+                            <td>
+                                <input asp-for="Device.Sn" class="form-control" />
+                                <span asp-validation-for="Device.Sn" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Modello
+                            </td>
+                            <td>
+                                <select asp-for="Device.ModelId" class="form-control" asp-items="ViewBag.ModelID"></select>
+                                <span asp-validation-for="Device.ModelId" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Utente
+                            </td>
+                            <td>
+                                <select asp-for="Relation.UserId" class="form-control" asp-items="ViewBag.UserID">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="Relation.UserId" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Codice cespite ZHE
+                            </td>
+                            <td>
+                                <input asp-for="Device.Zhe" class="form-control" />
+                                <span asp-validation-for="Device.Zhe" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Stato
+                            </td>
+                            <td>
+                                <select asp-for="Device.Stato" class="form-control">
+                                    <option>Disponibile</option>
+                                    <option>Installato</option>
+                                    <option>Ritirato</option>
+                                </select>
+                                <span asp-validation-for="Device.Stato" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Data
+                            </td>
+                            <td>
+                                <input type="date" asp-for="Device.Data" class="form-control" />
+                                <span asp-validation-for="Device.Data" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Note
+                            </td>
+                            <td>
+                                <input asp-for="Device.Note" class="form-control" />
+                                <span asp-validation-for="Device.Note" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Ordine d'acquisto
+                            </td>
+                            <td>
+                                <select asp-for="Device.AccountId" class="form-control" asp-items="ViewBag.AccountID">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="Device.AccountId" class="text-danger"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <input type="submit" value="Crea" class="btn btn_crea" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <p></p>
+    <a asp-page="Index">Annulla e torna all'indice dei dispositivi</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
